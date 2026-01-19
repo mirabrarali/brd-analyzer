@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BRD Analyzer</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>BRD Analyzer</h1>
+        <p>Upload a PDF or DOCX. Get a structured 2+ page BRD analysis report (PDF) with summary, suggestions, and preferred steps.</p>
+      </header>
+
+      <section class="card">
+        <div class="row">
+          <label class="label" for="file">Document (PDF/DOCX)</label>
+          <input id="file" type="file" accept=".pdf,.docx" />
+        </div>
+
+        <div class="row">
+          <label class="label" for="output">Output</label>
+          <select id="output">
+            <option value="pdf" selected>PDF report</option>
+            <option value="json">JSON only (debug)</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button id="analyzeBtn">Analyze</button>
+          <button id="sampleBtn" class="secondary">Check API Health</button>
+        </div>
+
+        <div id="status" class="status" aria-live="polite"></div>
+      </section>
+
+      <section class="card" id="previewCard" style="display:none;">
+        <h2>Preview</h2>
+        <pre id="preview" class="preview"></pre>
+      </section>
+
+      <footer class="footer">
+        <div>Set environment variable <code>GROQ_API_KEY</code> in Vercel Project Settings.</div>
+      </footer>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
