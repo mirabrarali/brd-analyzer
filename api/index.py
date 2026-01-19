@@ -1,5 +1,6 @@
 import io
 import os
+import re
 from typing import Any, Dict, Optional
 
 from fastapi import FastAPI, File, HTTPException, Query, UploadFile
@@ -101,7 +102,20 @@ def _call_groq_brd_agent(document_text: str) -> Dict[str, Any]:
     try:
         return json.loads(content)
     except Exception:
-        raise HTTPException(status_code=502, detail="Model returned non-JSON output")
+        start = content.find("{")
+        end = content.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            candidate = content[start : end + 1]
+            try:
+                return json.loads(candidate)
+            except Exception:
+                pass
+
+        preview = re.sub(r"\s+", " ", content).strip()[:500]
+        raise HTTPException(
+            status_code=502,
+            detail=f"Model returned non-JSON output. Preview: {preview}",
+        )
 
 
 def _para(text: str, style: ParagraphStyle) -> Paragraph:
@@ -192,11 +206,13 @@ def _build_pdf(report: Dict[str, Any]) -> bytes:
     return buf.getvalue()
 
 
+@app.get("/health")
 @app.get("/api/health")
 def health() -> Dict[str, str]:
     return {"status": "ok"}
 
 
+@app.post("/analyze")
 @app.post("/api/analyze")
 async def analyze(
     file: UploadFile = File(...),
