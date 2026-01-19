@@ -10,7 +10,7 @@
     <main class="container">
       <header class="header">
         <h1>BRD Analyzer</h1>
-        <p>Upload a PDF or DOCX. Get a structured 2+ page BRD analysis report (PDF) with summary, suggestions, and preferred steps.</p>
+        <p>Upload your Business Requirements Document (PDF or DOCX) to generate a comprehensive analysis report with executive summary, requirements, risk assessment, and implementation roadmap.</p>
       </header>
 
       <section class="card">
@@ -22,26 +22,19 @@
         <div class="row">
           <label class="label" for="output">Output</label>
           <select id="output">
-            <option value="pdf" selected>PDF report</option>
-            <option value="json">JSON only (debug)</option>
+            <option value="pdf" selected>PDF Report</option>
           </select>
         </div>
 
         <div class="actions">
-          <button id="analyzeBtn">Analyze</button>
-          <button id="sampleBtn" class="secondary">Check API Health</button>
+          <button id="analyzeBtn">Generate Report</button>
         </div>
 
         <div id="status" class="status" aria-live="polite"></div>
       </section>
 
-      <section class="card" id="previewCard" style="display:none;">
-        <h2>Preview</h2>
-        <pre id="preview" class="preview"></pre>
-      </section>
-
       <footer class="footer">
-        <div>Set environment variable <code>GROQ_API_KEY</code> in Vercel Project Settings.</div>
+        <div>Powered by Advanced AI Analysis</div>
       </footer>
     </main>
 
